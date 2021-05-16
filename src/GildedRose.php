@@ -22,10 +22,10 @@ class GildedRose {
     */
     function update_quality() {
         foreach ($this->items as $item) {
-            if ($item->name != $this->ab and $item->name != $this->bptatc) {
-                $this->remove_quality($item);
+            if ($item->name != $this->ab && $item->name != $this->bptatc) {
+                $this->reduce_quality($item);
             } else {
-                $this->add_quality($item);
+                $this->increase_quality($item);
             }
 
             if ($item->name != $this->shor) {
@@ -43,11 +43,9 @@ class GildedRose {
     * @param Item $item
     * @return boolean
     */
-    private function remove_quality(Item $item) {
+    private function reduce_quality(Item $item) {
         if ($item->quality && $item->name != $this->shor) {
-            if ($item->name != $this->shor) {
-                $item->quality--;
-            }
+            $item->quality--;
         }
         return true;
     }
@@ -56,16 +54,11 @@ class GildedRose {
     * @param Item $item
     * @return boolean
     */
-    private function add_quality(Item $item) {
+    private function increase_quality(Item $item) {
         if ($item->quality < $this->max_quality) {
             $item->quality++;
             if ($item->name == $this->bptatc) {
-                if ($item->sell_in < 11) {
-                        $item->quality++;
-                }
-                if ($item->sell_in < 6) {
-                        $item->quality++;
-                }
+                $this->backstage_special($item);
             }
         }
         return true;
@@ -90,6 +83,20 @@ class GildedRose {
             if ($item->quality < $this->max_quality) {
                 $item->quality++;
             }
+        }
+        return true;
+    }
+
+    /**
+    * @param Item $item
+    * @return boolean
+    */
+    private function backstage_special(Item $item) {
+        if ($item->sell_in < 11) {
+            $item->quality++;
+        }
+        if ($item->sell_in < 6) {
+            $item->quality++;
         }
         return true;
     }
