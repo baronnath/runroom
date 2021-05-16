@@ -19,37 +19,33 @@ class GildedRose {
             if ($item->name != $this->ab and $item->name != $this->bptatc) {
                 if ($item->quality > 0) {
                     if ($item->name != $this->shor) {
-                        $item->quality = $item->quality - 1;
+                        $item->quality--;
                     }
                 }
             } else {
                 if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
+                    $item->quality++;
                     if ($item->name == $this->bptatc) {
                         if ($item->sell_in < 11) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
+                                $item->quality++;
                         }
                         if ($item->sell_in < 6) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
+                                $item->quality++;
                         }
                     }
                 }
             }
 
             if ($item->name != $this->shor) {
-                $item->sell_in = $item->sell_in - 1;
+                $item->sell_in--;
             }
 
             if ($item->sell_in < 0) {
-                if ($item->name != 'Aged Brie') {
+                if ($item->name != $this->ab) {
                     if ($item->name != $this->bptatc) {
                         if ($item->quality > 0) {
                             if ($item->name != $this->shor) {
-                                $item->quality = $item->quality - 1;
+                                $item->quality--;
                             }
                         }
                     } else {
@@ -57,10 +53,14 @@ class GildedRose {
                     }
                 } else {
                     if ($item->quality < 50) {
-                        $item->quality = $item->quality + 1;
+                        $item->quality++;
                     }
                 }
             }
         }
     }
+
+    private function quality_check($item) {
+        
+    } 
 }
