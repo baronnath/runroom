@@ -5,6 +5,10 @@ namespace Runroom\GildedRose;
 class GildedRose {
 
     private $items;
+    private $ab = 'Aged Brie';
+    private $bptatc = 'Backstage passes to a TAFKAL80ETC concert';
+    private $shor = 'Sulfuras, Hand of Ragnaros';
+
 
     function __construct($items) {
         $this->items = $items;
@@ -12,16 +16,16 @@ class GildedRose {
 
     function update_quality() {
         foreach ($this->items as $item) {
-            if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
+            if ($item->name != $this->ab and $item->name != $this->bptatc) {
                 if ($item->quality > 0) {
-                    if ($item->name != 'Sulfuras, Hand of Ragnaros') {
+                    if ($item->name != $this->shor) {
                         $item->quality = $item->quality - 1;
                     }
                 }
             } else {
                 if ($item->quality < 50) {
                     $item->quality = $item->quality + 1;
-                    if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
+                    if ($item->name == $this->bptatc) {
                         if ($item->sell_in < 11) {
                             if ($item->quality < 50) {
                                 $item->quality = $item->quality + 1;
@@ -36,15 +40,15 @@ class GildedRose {
                 }
             }
 
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
+            if ($item->name != $this->shor) {
                 $item->sell_in = $item->sell_in - 1;
             }
 
             if ($item->sell_in < 0) {
                 if ($item->name != 'Aged Brie') {
-                    if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
+                    if ($item->name != $this->bptatc) {
                         if ($item->quality > 0) {
-                            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
+                            if ($item->name != $this->shor) {
                                 $item->quality = $item->quality - 1;
                             }
                         }
