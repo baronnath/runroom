@@ -4,17 +4,22 @@ namespace Runroom\GildedRose;
 
 class GildedRose {
 
-    private $items;
-    private $ab = 'Aged Brie';
-    private $bptatc = 'Backstage passes to a TAFKAL80ETC concert';
-    private $shor = 'Sulfuras, Hand of Ragnaros';
-    private $max_quality = 50;
+    private array $items;
+    private string $ab = 'Aged Brie';
+    private string $bptatc = 'Backstage passes to a TAFKAL80ETC concert';
+    private string $shor = 'Sulfuras, Hand of Ragnaros';
+    private int $max_quality = 50;
 
-
-    function __construct($items) {
+    /**
+     * @param array<int, Item> $items
+     */
+    function __construct(array $items) {
         $this->items = $items;
     }
 
+    /**
+    * @return boolean
+    */
     function update_quality() {
         foreach ($this->items as $item) {
             if ($item->name != $this->ab and $item->name != $this->bptatc) {
@@ -31,17 +36,27 @@ class GildedRose {
                 $this->not_sell_in($item);
             }
         }
+        return true;
     }
 
-    private function remove_quality($item) {
-        if ($item->quality) {
+    /**
+    * @param Item $item
+    * @return boolean
+    */
+    private function remove_quality(Item $item) {
+        if ($item->quality && $item->name != $this->shor) {
             if ($item->name != $this->shor) {
                 $item->quality--;
             }
         }
+        return true;
     }
 
-    private function add_quality($item) {
+    /**
+    * @param Item $item
+    * @return boolean
+    */
+    private function add_quality(Item $item) {
         if ($item->quality < $this->max_quality) {
             $item->quality++;
             if ($item->name == $this->bptatc) {
@@ -53,9 +68,14 @@ class GildedRose {
                 }
             }
         }
+        return true;
     }
 
-    private function not_sell_in($item) {
+    /**
+    * @param Item $item
+    * @return boolean
+    */
+    private function not_sell_in(Item $item) {
         if ($item->name != $this->ab) {
             if ($item->name != $this->bptatc) {
                 if ($item->quality) {
@@ -71,5 +91,6 @@ class GildedRose {
                 $item->quality++;
             }
         }
+        return true;
     }
 }
